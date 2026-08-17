@@ -1,6 +1,7 @@
 {
-  "name": "naila-karima-psychotherapy",
+  "name": "matt-karimov-sdet-portfolio",
   "version": "0.1.0",
+  "description": "Portfolio website for Matt Karimov, QA Automation Specialist & Senior Automation Tester.",
   "private": true,
   "scripts": {
     "dev": "next dev",

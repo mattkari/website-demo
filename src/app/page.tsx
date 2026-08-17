@@ -1,91 +1,233 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Menu, X, Mail, Phone, MapPin, Heart, Leaf, Calendar, Check } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Mail,
+  MapPin,
+  Terminal,
+  Check,
+  Github,
+  Linkedin,
+  Briefcase,
+  GraduationCap,
+  Database,
+  GitBranch,
+  Cloud,
+  Layers,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Alert } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
+
+const LINKEDIN_URL = 'https://www.linkedin.com/in/mattkari';
+const GITHUB_URL = 'https://github.com/mattkari';
+const EMAIL = 'mattkarimov@outlook.com';
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
-    phone: '',
-    preferredDate: '',
-    preferredTime: '',
-    reason: '',
-    questions: '',
+    message: '',
   });
 
   const navLinks = [
     { name: 'Home', href: '#home' },
-    { name: 'About Me', href: '#about' },
-    { name: 'Services', href: '#services' },
-    { name: 'Prices', href: '#prices' },
+    { name: 'About', href: '#about' },
+    { name: 'Skills', href: '#skills' },
+    { name: 'Experience', href: '#experience' },
+    { name: 'Education', href: '#education' },
     { name: 'Contact', href: '#contact' },
   ];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
     setFormSubmitted(true);
     setTimeout(() => setFormSubmitted(false), 5000);
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      preferredDate: '',
-      preferredTime: '',
-      reason: '',
-      questions: '',
-    });
+    setFormData({ name: '', email: '', message: '' });
   };
 
+  const differentiators = [
+    'Payments Domain Expertise (SEPA & Instant Payments)',
+    'ICON IPF Framework Specialist (3+ years)',
+    '5+ Years in Banking & Financial Services',
+    'CI/CD Pipeline Expertise (Jenkins, GitLab CI/CD)',
+    'Containerization (Docker, Kubernetes)',
+    'MCP & RAG-Based Test Tooling',
+    'Stakeholder Management & Mentorship',
+  ];
+
+  const skillGroups = [
+    {
+      icon: Terminal,
+      title: 'Programming & Frameworks',
+      items: ['Java (OOP)', 'Ruby', 'Selenium WebDriver', 'TestNG', 'JUnit', 'Cucumber BDD', 'JBehave'],
+    },
+    {
+      icon: Layers,
+      title: 'API & Design Patterns',
+      items: ['REST Assured', 'Postman', 'REST APIs', 'JSON / XML', 'Page Object Model', 'BDD / TDD'],
+    },
+    {
+      icon: Database,
+      title: 'Database Testing',
+      items: ['SQL', 'MongoDB'],
+    },
+    {
+      icon: GitBranch,
+      title: 'CI/CD & Version Control',
+      items: ['Jenkins', 'GitLab CI/CD', 'Maven', 'Docker', 'Kubernetes', 'Git', 'GitLab', 'Bitbucket'],
+    },
+    {
+      icon: Cloud,
+      title: 'Cloud & Architecture',
+      items: ['AWS (EC2)', 'Microservices', 'Distributed Systems'],
+    },
+    {
+      icon: Briefcase,
+      title: 'Domain & Methodology',
+      items: ['Financial Services', 'Payments & Banking', 'Agile Scrum', 'SDLC / STLC', 'Jira'],
+    },
+    {
+      icon: Terminal,
+      title: 'AI-Assisted Testing Tooling',
+      items: ['Karate Framework', 'Playwright (Java)', 'MCP Servers', 'RAG Test Assistants'],
+    },
+  ];
+
+  const experience = [
+    {
+      title: 'Test Automation Engineer',
+      company: 'Barclays Investment Bank, UK',
+      period: '02/2026 – Present',
+      highlights: [
+        'Architected UI test automation using Playwright with Java for a global investment bank platform',
+        'Built the Karate Framework for API testing, streamlining backend and service-level test coverage',
+        'Developed multiple MCP (Model Context Protocol) servers connecting LLM tooling to internal systems, including SQL, Atlassian, GitLab, and Playwright integrations',
+        'Built a Karate Test Assistant RAG tool grounded in framework docs and test code to support API test authoring and debugging',
+      ],
+    },
+    {
+      title: 'Quality Automation Specialist',
+      company: 'NatWest Group, UK',
+      period: '02/2022 – 01/2026',
+      highlights: [
+        "Led testing of NatWest's ICON IPF (Integration Processing Framework) platform for 3+ years, becoming a subject matter expert in integration framework testing and payment processing workflows",
+        'Enhanced the IPF test framework by introducing the REST Assured library for API testing and implementing the Strategy Pattern to improve maintainability and code reusability',
+        'Built and maintained automation frameworks covering backend, API, and database testing for SEPA and instant payment systems',
+        'Spearheaded a BDD automation approach using JBehave and Cucumber, translating JIRA business requirements into executable test scenarios',
+        'Integrated automated tests into CI/CD pipelines using Jenkins and GitLab CI/CD for continuous testing and rapid feedback',
+        'Pioneered integrating the test framework with Docker and Kubernetes for consistent, containerized test environments',
+      ],
+    },
+    {
+      title: 'QA Automation Engineer',
+      company: 'Amplience, UK',
+      period: '04/2021 – 01/2022',
+      highlights: [
+        'Designed and implemented a test automation framework using Java, Selenium WebDriver, Cucumber BDD, TestNG, and the Page Object Model',
+        'Integrated automated tests into CI/CD build processes using Jenkins on AWS EC2',
+        'Conducted API testing with REST Assured and Postman, validating REST APIs and JSON schemas',
+        'Performed database testing with MongoDB, verifying data consistency and integrity across integrated systems',
+        'Executed exploratory, integration, E2E, smoke, regression, and UI testing across the product',
+      ],
+    },
+    {
+      title: 'Complaints Manager (Testing & Validation Focus)',
+      company: 'Lloyds Banking Group, UK',
+      period: '11/2017 – 01/2021',
+      highlights: [
+        'Led manual and automated testing of banking redress calculators for Asset Finance Payment Protection Insurance claims',
+        'Performed SQL database testing and data-driven validation to improve accuracy of claim processes',
+        'Served as Subject Matter Expert in redress calculations, training team members on testing best practices',
+      ],
+    },
+    {
+      title: 'Quality Assurance Representative',
+      company: 'HSBC, Leeds, UK',
+      period: '05/2017 – 11/2017',
+      highlights: [
+        'Conducted manual testing, verification, and validation on complex financial calculators for PPI complaints',
+        'Performed SQL database testing and data reviews to ensure accuracy in the banking domain',
+      ],
+    },
+  ];
+
+  const education = [
+    {
+      program: 'Full Stack Automation Tester (SDET) Program',
+      school: 'Cydeo, Virginia, USA',
+      year: '2020',
+    },
+    {
+      program: 'PhD in Governance and International Affairs',
+      school: 'Durham University, UK',
+      year: '2018',
+    },
+    {
+      program: 'MA in Public Administration',
+      school: 'JMI Central University, New Delhi, India',
+      year: '2006',
+    },
+    {
+      program: 'BA in Legal Studies',
+      school: 'TIU University, Tashkent, Uzbekistan',
+      year: '2003',
+    },
+  ];
+
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-emerald-50 to-background">
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-emerald-100 shadow-sm">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-background">
+      {/* Navigation */}
+      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-blue-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-emerald-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">NK</span>
+              <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                <span className="text-white font-bold text-lg">MK</span>
               </div>
-              <span className="font-semibold text-lg text-emerald-900 hidden sm:block">Naila Karima</span>
+              <span className="font-semibold text-lg text-blue-900 hidden sm:block">
+                Matt Karimov
+              </span>
             </div>
 
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-6">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-emerald-800 hover:text-emerald-600 transition-colors font-medium"
+                  className="text-blue-800 hover:text-blue-600 transition-colors font-medium"
                 >
                   {link.name}
                 </a>
               ))}
-              <Button 
-                onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-                className="bg-emerald-600 hover:bg-emerald-700"
+              <Button
+                onClick={() => scrollTo('contact-form')}
+                className="bg-blue-600 hover:bg-blue-700"
               >
-                Book an Assessment
+                Get In Touch
               </Button>
             </div>
 
             <button
-              className="md:hidden text-emerald-800 hover:text-emerald-600"
+              className="md:hidden text-blue-800 hover:text-blue-600"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -95,430 +237,360 @@ export default function Home() {
         </div>
 
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-emerald-100">
-            <div className="px-4 py-4 space-y-3">
+          <div className="md:hidden bg-white border-t border-blue-100">
+            <div className="px-2 pt-2 pb-3 space-y-1">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="block text-emerald-800 hover:text-emerald-600 transition-colors font-medium py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-blue-800 hover:text-blue-600 hover:bg-blue-50"
                 >
                   {link.name}
                 </a>
               ))}
-              <Button 
-                className="w-full bg-emerald-600 hover:bg-emerald-700"
-                onClick={() => {
-                  document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' });
-                  setIsMobileMenuOpen(false);
-                }}
-              >
-                Book an Assessment
-              </Button>
+              <div className="px-3 py-2">
+                <Button
+                  className="w-full bg-blue-600 hover:bg-blue-700"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    scrollTo('contact-form');
+                  }}
+                >
+                  Get In Touch
+                </Button>
+              </div>
             </div>
           </div>
         )}
       </nav>
 
-      <main className="flex-grow">
-        <section id="home" className="relative py-20 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto text-center">
-            <div className="mb-8 flex justify-center">
-              <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-4xl">NK</span>
-              </div>
+      {/* Hero */}
+      <section id="home" className="relative py-20 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="mb-8 flex justify-center">
+            <div className="w-24 h-24 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-4xl">MK</span>
             </div>
-            
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-emerald-900 mb-6">
-              Welcome to Healing Conversations
-            </h1>
-            
-            <p className="text-xl sm:text-2xl text-emerald-700 mb-4 font-medium">
-              Professional Psychotherapy & Transactional Analysis
+          </div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-blue-900 mb-6">
+            Matt Karimov
+          </h1>
+
+          <p className="text-xl sm:text-2xl text-blue-700 mb-4 font-medium">
+            QA Automation Specialist &amp; Senior Automation Tester
+          </p>
+
+          <p className="text-lg text-blue-800/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+            5+ years specializing in backend automation, API testing, and database
+            validation within Banking and Financial Services. Currently a Test
+            Automation Engineer at Barclays Investment Bank, building and scaling
+            test automation frameworks with Java, Selenium, Playwright, and BDD,
+            integrated into CI/CD pipelines. Based in Manchester, United Kingdom.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-6 text-lg"
+              onClick={() => scrollTo('contact-form')}
+            >
+              Get In Touch
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-blue-600 text-blue-700 hover:bg-blue-50 px-8 py-6 text-lg"
+              onClick={() => scrollTo('experience')}
+            >
+              View Experience
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* About */}
+      <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-4">About Me</h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+          </div>
+
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <p className="text-lg text-blue-800 leading-relaxed">
+              Experienced QA Automation Engineer with 5+ years specializing in backend
+              automation, API testing, and database validation within Banking and
+              Financial Services. Proven expertise in developing and maintaining test
+              automation frameworks using Java, Selenium, and BDD methodologies, with
+              hands-on experience integrating automated tests into CI/CD pipelines.
             </p>
-            
-            <p className="text-lg text-emerald-800/80 mb-12 max-w-3xl mx-auto leading-relaxed">
-              I&apos;m Naila Karima, a trainee psychotherapist professionally trained in Transactional Analysis. 
-              I provide compassionate, evidence-based therapy to support your journey toward healing and personal growth.
+            <p className="text-lg text-blue-800 leading-relaxed">
+              Strong track record of collaborating with cross-functional teams to
+              design comprehensive test strategies, execute complex test scenarios,
+              and ensure software quality and reliability in Agile environments.
+              Demonstrated ability to lead testing initiatives, perform root cause
+              analysis, and drive continuous improvement in testing processes.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-6 text-lg"
-                onClick={() => document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Book an Assessment
-              </Button>
-              <Button 
-                size="lg"
+
+            <div className="pt-4 flex flex-wrap justify-center gap-3">
+              <Button
                 variant="outline"
-                className="border-emerald-600 text-emerald-700 hover:bg-emerald-50 px-8 py-6 text-lg"
-                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+                className="border-blue-600 text-blue-700 hover:bg-blue-50"
+                onClick={() => window.open(LINKEDIN_URL, '_blank', 'noopener noreferrer')}
               >
-                Learn More
+                <Linkedin size={18} className="mr-2" />
+                LinkedIn Profile
+              </Button>
+              <Button
+                variant="outline"
+                className="border-blue-600 text-blue-700 hover:bg-blue-50"
+                onClick={() => window.open(GITHUB_URL, '_blank', 'noopener noreferrer')}
+              >
+                <Github size={18} className="mr-2" />
+                GitHub Profile
               </Button>
             </div>
-          </div>
-        </section>
 
-        <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-emerald-900 mb-4">About Me</h2>
-              <div className="w-24 h-1 bg-emerald-600 mx-auto"></div>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 mb-16">
-              <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
-                    <Heart className="text-emerald-600" size={24} />
-                  </div>
-                  <CardTitle className="text-emerald-900">Compassionate Care</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-emerald-700">
-                    Creating a safe, non-judgmental space where you can explore your thoughts and feelings openly.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
-                    <Leaf className="text-emerald-600" size={24} />
-                  </div>
-                  <CardTitle className="text-emerald-900">Transactional Analysis</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-emerald-700">
-                    Professionally trained in Transactional Analysis, offering evidence-based therapeutic approaches.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
-                    <Calendar className="text-emerald-600" size={24} />
-                  </div>
-                  <CardTitle className="text-emerald-900">Flexible Sessions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-emerald-700">
-                    Convenient session times including evenings and weekends to accommodate your schedule.
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-lg text-emerald-800 leading-relaxed mb-6">
-                As a trainee psychotherapist specializing in Transactional Analysis, I believe in everyone&apos;s innate 
-                capacity for growth and positive change. My approach combines professional training with genuine empathy, 
-                helping you understand patterns in your thoughts, feelings, and behaviors.
-              </p>
-              <p className="text-lg text-emerald-800 leading-relaxed">
-                Together, we can work towards developing greater self-awareness, building healthier relationships, and 
-                achieving your personal goals. I am committed to supporting you through every step of your therapeutic journey.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 bg-emerald-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-emerald-900 mb-4">Services</h2>
-              <div className="w-24 h-1 bg-emerald-600 mx-auto"></div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-emerald-900 text-2xl">Individual Therapy</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {['Anxiety and depression management', 'Building self-esteem', 'Personal growth and development', 'Coping strategies and resilience'].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="text-emerald-600 mt-1 flex-shrink-0" size={18} />
-                        <span className="text-emerald-800">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-emerald-900 text-2xl">Relationship Therapy</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {['Improved communication skills', 'Understanding relationship patterns', 'Conflict resolution', 'Setting healthy boundaries'].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="text-emerald-600 mt-1 flex-shrink-0" size={18} />
-                        <span className="text-emerald-800">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-emerald-900 text-2xl">Transactional Analysis</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {['Understanding ego states', 'Recognizing patterns', 'Script analysis', 'Developing autonomy'].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="text-emerald-600 mt-1 flex-shrink-0" size={18} />
-                        <span className="text-emerald-800">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-emerald-900 text-2xl">Assessment Sessions</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-3">
-                    {['Comprehensive assessment', 'Goal setting', 'Personalized recommendations', 'Q&A and discussion'].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="text-emerald-600 mt-1 flex-shrink-0" size={18} />
-                        <span className="text-emerald-800">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        <section id="prices" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-emerald-900 mb-4">Prices</h2>
-              <div className="w-24 h-1 bg-emerald-600 mx-auto"></div>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-emerald-900 text-2xl">Assessment Session</CardTitle>
-                  <div className="mt-4">
-                    <span className="text-4xl font-bold text-emerald-700">£40</span>
-                    <span className="text-emerald-600">/session</span>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-emerald-700 mb-4">60-minute initial consultation</p>
-                  <ul className="space-y-3">
-                    {['Comprehensive assessment', 'Discussion of your goals', 'Treatment planning', 'All questions answered'].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="text-emerald-600 mt-1 flex-shrink-0" size={18} />
-                        <span className="text-emerald-800">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-
-              <Card className="border-emerald-600 shadow-xl relative">
-                <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-emerald-600 text-white">
-                  Most Popular
+            <div className="flex flex-wrap justify-center gap-3 pt-8">
+              {differentiators.map((item) => (
+                <Badge
+                  key={item}
+                  className="bg-blue-100 text-blue-800 hover:bg-blue-200 text-sm py-2 px-4"
+                >
+                  {item}
                 </Badge>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills */}
+      <section id="skills" className="py-20 px-4 sm:px-6 lg:px-8 bg-blue-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-4">Core Technical Skills</h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {skillGroups.map((group) => (
+              <Card key={group.title} className="border-blue-200 hover:shadow-lg transition-shadow">
                 <CardHeader>
-                  <CardTitle className="text-emerald-900 text-2xl">Individual Therapy</CardTitle>
-                  <div className="mt-4">
-                    <span className="text-4xl font-bold text-emerald-700">£50</span>
-                    <span className="text-emerald-600">/session</span>
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <group.icon className="text-blue-600" size={24} />
+                  </div>
+                  <CardTitle className="text-blue-900 text-lg">{group.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <Badge key={item} variant="secondary" className="bg-blue-100 text-blue-800 font-normal">
+                        {item}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Experience */}
+      <section id="experience" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-4">Professional Experience</h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-6">
+            {experience.map((role) => (
+              <Card key={role.title + role.company} className="border-blue-200 hover:shadow-lg transition-shadow">
+                <CardHeader>
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <Briefcase className="text-blue-600" size={22} />
+                      </div>
+                      <div>
+                        <CardTitle className="text-blue-900">{role.title}</CardTitle>
+                        <CardDescription className="text-blue-700 font-medium">
+                          {role.company}
+                        </CardDescription>
+                      </div>
+                    </div>
+                    <Badge variant="outline" className="border-blue-300 text-blue-700 whitespace-nowrap self-start sm:self-auto">
+                      {role.period}
+                    </Badge>
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-emerald-700 mb-4">60-minute therapy session</p>
                   <ul className="space-y-3">
-                    {['Personalized treatment plan', 'One-on-one therapy', 'Progress tracking', 'Flexible scheduling'].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="text-emerald-600 mt-1 flex-shrink-0" size={18} />
-                        <span className="text-emerald-800">{item}</span>
+                    {role.highlights.map((item) => (
+                      <li key={item} className="flex items-start gap-3">
+                        <Check className="text-blue-600 mt-1 flex-shrink-0" size={18} />
+                        <span className="text-blue-800">{item}</span>
                       </li>
                     ))}
                   </ul>
                 </CardContent>
               </Card>
-
-              <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="text-emerald-900 text-2xl">Package of 6</CardTitle>
-                  <div className="mt-4">
-                    <span className="text-4xl font-bold text-emerald-700">£270</span>
-                    <span className="text-emerald-600">/package</span>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-emerald-700 mb-4">Save £30 on 6 sessions</p>
-                  <ul className="space-y-3">
-                    {['Consistent therapy support', 'Better outcomes', 'Cost savings', 'Committed approach'].map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <Check className="text-emerald-600 mt-1 flex-shrink-0" size={18} />
-                        <span className="text-emerald-800">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="mt-12 text-center max-w-3xl mx-auto">
-              <p className="text-emerald-700 bg-emerald-50 p-6 rounded-lg border border-emerald-200">
-                <strong>Note:</strong> As a trainee psychotherapist, I work under professional supervision to ensure 
-                the highest quality of care. This allows me to offer accessible rates while maintaining 
-                professional standards.
-              </p>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-emerald-50">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold text-emerald-900 mb-4">Contact</h2>
-              <div className="w-24 h-1 bg-emerald-600 mx-auto"></div>
-            </div>
+      {/* Education */}
+      <section id="education" className="py-20 px-4 sm:px-6 lg:px-8 bg-blue-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-4">
+              Education &amp; Professional Development
+            </h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+          </div>
 
-            <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              <div className="space-y-6">
-                <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Mail className="text-emerald-600" size={24} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-emerald-900 mb-1">Email</h3>
-                        <a href="mailto:naila.karima@example.com" className="text-emerald-700 hover:text-emerald-600">
-                          naila.karima@example.com
-                        </a>
-                      </div>
+          <div className="grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {education.map((item) => (
+              <Card key={item.program} className="border-blue-200 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <GraduationCap className="text-blue-600" size={24} />
                     </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <Phone className="text-emerald-600" size={24} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-emerald-900 mb-1">Phone</h3>
-                        <a href="tel:+441234567890" className="text-emerald-700 hover:text-emerald-600">
-                          +44 (0) 123 456 7890
-                        </a>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="border-emerald-200 hover:shadow-lg transition-shadow">
-                  <CardContent className="pt-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <MapPin className="text-emerald-600" size={24} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-emerald-900 mb-1">Location</h3>
-                        <p className="text-emerald-700">Online & In-Person</p>
-                        <p className="text-emerald-600">London, UK</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              <Card className="border-emerald-200">
-                <CardHeader>
-                  <CardTitle className="text-emerald-900 text-2xl">Availability</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="flex justify-between items-center pb-3 border-b border-emerald-100">
-                      <span className="font-medium text-emerald-900">Monday - Friday</span>
-                      <span className="text-emerald-700">9:00 AM - 8:00 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center pb-3 border-b border-emerald-100">
-                      <span className="font-medium text-emerald-900">Saturday</span>
-                      <span className="text-emerald-700">10:00 AM - 4:00 PM</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="font-medium text-emerald-900">Sunday</span>
-                      <span className="text-emerald-600">Closed</span>
+                    <div>
+                      <h3 className="font-semibold text-blue-900 mb-1">{item.program}</h3>
+                      <p className="text-blue-700 text-sm">{item.school}</p>
+                      <p className="text-blue-600 text-sm">{item.year}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section id="booking" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl sm:text-4xl font-bold text-emerald-900 mb-4">Book an Assessment</h2>
-              <div className="w-24 h-1 bg-emerald-600 mx-auto mb-6"></div>
-              <p className="text-lg text-emerald-700">
-                Take the first step towards positive change. Complete the form below to book your initial assessment session.
-              </p>
+      {/* Contact */}
+      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-blue-900 mb-4">Contact</h2>
+            <div className="w-24 h-1 bg-blue-600 mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="space-y-6">
+              <Card className="border-blue-200 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Mail className="text-blue-600" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-blue-900 mb-1">Email</h3>
+                      <a
+                        href={`mailto:${EMAIL}`}
+                        className="text-blue-700 hover:text-blue-600"
+                      >
+                        {EMAIL}
+                      </a>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-blue-200 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Linkedin className="text-blue-600" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-blue-900 mb-1">LinkedIn</h3>
+                      <a
+                        href={LINKEDIN_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-700 hover:text-blue-600"
+                      >
+                        linkedin.com/in/mattkari
+                      </a>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-blue-200 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <Github className="text-blue-600" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-blue-900 mb-1">GitHub</h3>
+                      <a
+                        href={GITHUB_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-700 hover:text-blue-600"
+                      >
+                        github.com/mattkari
+                      </a>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card className="border-blue-200 hover:shadow-lg transition-shadow">
+                <CardContent className="pt-6">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <MapPin className="text-blue-600" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-blue-900 mb-1">Location</h3>
+                      <p className="text-blue-700">Manchester, England</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
 
-            {formSubmitted && (
-              <Alert className="mb-6 bg-emerald-50 border-emerald-200 text-emerald-800">
-                <Check className="h-4 w-4" />
-                <div>
-                  <strong>Success!</strong> Your booking request has been submitted. I&apos;ll be in touch within 24 hours to confirm your appointment.
-                </div>
-              </Alert>
-            )}
-
-            <Card className="border-emerald-200 shadow-lg">
-              <CardContent className="pt-6">
+            <Card id="contact-form" className="border-blue-200 scroll-mt-24">
+              <CardHeader>
+                <CardTitle className="text-blue-900">Get In Touch</CardTitle>
+                <CardDescription className="text-blue-700">
+                  Send a message via the contact form
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {formSubmitted && (
+                  <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
+                    <p className="font-medium">Message sent (demo)</p>
+                    <p className="text-sm">
+                      This demo form does not send real messages. Please connect via LinkedIn or email.
+                    </p>
+                  </div>
+                )}
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="firstName" className="text-emerald-900">First Name *</Label>
-                      <Input
-                        id="firstName"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        required
-                        className="border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="lastName" className="text-emerald-900">Last Name *</Label>
-                      <Input
-                        id="lastName"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        required
-                        className="border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500"
-                      />
-                    </div>
-                  </div>
-
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-emerald-900">Email Address *</Label>
+                    <Label htmlFor="name" className="text-blue-900">Name *</Label>
+                    <Input
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email" className="text-blue-900">Email *</Label>
                     <Input
                       id="email"
                       name="email"
@@ -526,118 +598,84 @@ export default function Home() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500"
+                      placeholder="you@example.com"
                     />
                   </div>
-
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-emerald-900">Phone Number (optional)</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500"
-                    />
-                  </div>
-
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="preferredDate" className="text-emerald-900">Preferred Date</Label>
-                      <Input
-                        id="preferredDate"
-                        name="preferredDate"
-                        type="date"
-                        value={formData.preferredDate}
-                        onChange={handleInputChange}
-                        className="border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="preferredTime" className="text-emerald-900">Preferred Time</Label>
-                      <select
-                        id="preferredTime"
-                        name="preferredTime"
-                        value={formData.preferredTime}
-                        onChange={handleInputChange}
-                        className="flex h-10 w-full rounded-md border border-emerald-200 bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                      >
-                        <option value="">Select a time</option>
-                        <option value="morning">Morning (9AM - 12PM)</option>
-                        <option value="afternoon">Afternoon (12PM - 5PM)</option>
-                        <option value="evening">Evening (5PM - 8PM)</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="reason" className="text-emerald-900">Reason for Seeking Therapy (optional)</Label>
+                    <Label htmlFor="message" className="text-blue-900">Message *</Label>
                     <Textarea
-                      id="reason"
-                      name="reason"
-                      value={formData.reason}
+                      id="message"
+                      name="message"
+                      value={formData.message}
                       onChange={handleInputChange}
-                      rows={4}
-                      className="border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
+                      required
+                      rows={5}
+                      className="resize-none"
+                      placeholder="Your message..."
                     />
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="questions" className="text-emerald-900">Any Questions or Additional Information (optional)</Label>
-                    <Textarea
-                      id="questions"
-                      name="questions"
-                      value={formData.questions}
-                      onChange={handleInputChange}
-                      rows={4}
-                      className="border-emerald-200 focus:border-emerald-500 focus:ring-emerald-500 resize-none"
-                    />
-                  </div>
-
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-6 text-lg"
+                  <Button
+                    type="submit"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg"
                   >
-                    Submit Booking Request
+                    Send Message
                   </Button>
-
-                  <p className="text-sm text-emerald-600 text-center">
-                    <strong>Privacy Notice:</strong> Your information is confidential and will only be used to respond to your booking request.
+                  <p className="text-sm text-blue-600 text-center">
+                    <strong>Note:</strong> This is a demo form and does not send messages.
                   </p>
                 </form>
               </CardContent>
             </Card>
           </div>
-        </section>
-      </main>
+        </div>
+      </section>
 
-      <footer className="bg-emerald-950 text-white mt-auto">
+      {/* Footer */}
+      <footer className="bg-blue-950 text-white mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center space-y-6">
             <div className="flex justify-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-2xl">NK</span>
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl flex items-center justify-center shadow-lg">
+                <span className="text-white font-bold text-2xl">MK</span>
               </div>
             </div>
-            
+
             <div>
-              <h3 className="text-2xl font-bold mb-2">Naila Karima</h3>
-              <p className="text-emerald-300">Trainee Psychotherapist | Transactional Analysis</p>
+              <h3 className="text-2xl font-bold mb-2">Matt Karimov</h3>
+              <p className="text-blue-300">QA Automation Specialist &amp; Senior Automation Tester</p>
             </div>
-            
-            <div className="flex justify-center gap-8 text-emerald-200">
-              <a href="mailto:naila.karima@example.com" className="hover:text-emerald-100 transition-colors">
-                naila.karima@example.com
+
+            <div className="flex flex-wrap justify-center gap-8 text-blue-200">
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-100 transition-colors inline-flex items-center gap-2"
+              >
+                <Linkedin size={16} />
+                LinkedIn
               </a>
-              <a href="tel:+441234567890" className="hover:text-emerald-100 transition-colors">
-                +44 (0) 123 456 7890
+              <a
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-blue-100 transition-colors inline-flex items-center gap-2"
+              >
+                <Github size={16} />
+                GitHub
+              </a>
+              <a
+                href={`mailto:${EMAIL}`}
+                className="hover:text-blue-100 transition-colors inline-flex items-center gap-2"
+              >
+                <Mail size={16} />
+                {EMAIL}
               </a>
             </div>
-            
-            <div className="pt-6 border-t border-emerald-800">
-              <p className="text-emerald-400 text-sm">
-                © {new Date().getFullYear()} Naila Karima. All rights reserved.
+
+            <div className="pt-6 border-t border-blue-800">
+              <p className="text-blue-400 text-sm">
+                © {new Date().getFullYear()} Matt Karimov. All rights reserved.
               </p>
             </div>
           </div>

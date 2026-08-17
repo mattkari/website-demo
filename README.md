@@ -1,16 +1,15 @@
 # website-demo
 
-A professional psychotherapy website for Naila Karima, built with Next.js 15, React 18, and Tailwind CSS.
+A personal portfolio website for Matt Karimov, QA Automation Specialist & Senior
+Automation Tester, built with Next.js 15, React 18, and Tailwind CSS.
 
 ## Features
 
 - Modern, responsive design
 - Client-side navigation with smooth scrolling
-- Contact form with validation
-- Services overview section
-- Professional biography section
+- Professional profile, core technical skills, work experience, and education
+- Contact form
 - Mobile-friendly layout
-- Accessibility-focused UI components
 
 ## Tech Stack
 
@@ -54,8 +53,8 @@ npm run build
 
 - Reusable UI components (Button, Card, Input, etc.)
 - Responsive navigation
-- Contact form with validation
-- Hero and services sections
+- Contact form
+- Hero, about, skills, experience, education, and contact sections
 
 ## License
 
