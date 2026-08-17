@@ -123,6 +123,7 @@ export default function Home() {
         'Developed multiple MCP (Model Context Protocol) servers connecting LLM tooling to internal systems, including SQL, Atlassian, GitLab, and Playwright integrations',
         'Built a Karate Test Assistant RAG tool grounded in framework docs and test code to support API test authoring and debugging',
       ],
+      technologies: ['Playwright', 'Java', 'Karate Framework', 'MCP', 'RAG', 'SQL', 'GitLab'],
     },
     {
       title: 'Quality Automation Specialist',
@@ -136,6 +137,7 @@ export default function Home() {
         'Integrated automated tests into CI/CD pipelines using Jenkins and GitLab CI/CD for continuous testing and rapid feedback',
         'Pioneered integrating the test framework with Docker and Kubernetes for consistent, containerized test environments',
       ],
+      technologies: ['ICON IPF', 'Java', 'Selenium', 'JBehave', 'Cucumber BDD', 'JUnit', 'REST Assured', 'SQL', 'Docker', 'Kubernetes', 'Jenkins', 'GitLab CI/CD'],
     },
     {
       title: 'QA Automation Engineer',
@@ -148,6 +150,7 @@ export default function Home() {
         'Performed database testing with MongoDB, verifying data consistency and integrity across integrated systems',
         'Executed exploratory, integration, E2E, smoke, regression, and UI testing across the product',
       ],
+      technologies: ['Java', 'Ruby', 'Selenium', 'Cucumber BDD', 'TestNG', 'REST Assured', 'Postman', 'MongoDB', 'Jenkins', 'AWS EC2'],
     },
     {
       title: 'Complaints Manager (Testing & Validation Focus)',
@@ -158,6 +161,7 @@ export default function Home() {
         'Performed SQL database testing and data-driven validation to improve accuracy of claim processes',
         'Served as Subject Matter Expert in redress calculations, training team members on testing best practices',
       ],
+      technologies: ['Manual Testing', 'SQL', 'Financial Services', 'Outcome Testing'],
     },
     {
       title: 'Quality Assurance Representative',
@@ -167,7 +171,15 @@ export default function Home() {
         'Conducted manual testing, verification, and validation on complex financial calculators for PPI complaints',
         'Performed SQL database testing and data reviews to ensure accuracy in the banking domain',
       ],
+      technologies: ['Manual Testing', 'SQL', 'Banking Compliance'],
     },
+  ];
+
+  const stats = [
+    { value: '5+', label: 'Years in QA & Test Automation' },
+    { value: `${experience.length}`, label: 'Banking & Financial Services Employers' },
+    { value: '3+', label: 'Years as ICON IPF Framework SME' },
+    { value: `${skillGroups.reduce((total, group) => total + group.items.length, 0)}+`, label: 'Tools & Technologies' },
   ];
 
   const education = [
@@ -195,8 +207,15 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-blue-50 to-background">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-blue-600 focus:text-white focus:px-4 focus:py-2 focus:rounded-md"
+      >
+        Skip to main content
+      </a>
+
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-blue-100 shadow-sm">
+      <nav aria-label="Primary" className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-blue-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
@@ -265,6 +284,7 @@ export default function Home() {
         )}
       </nav>
 
+      <main id="main-content">
       {/* Hero */}
       <section id="home" className="relative py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
@@ -306,6 +326,15 @@ export default function Home() {
             >
               View Experience
             </Button>
+          </div>
+
+          <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {stats.map((stat) => (
+              <div key={stat.label} className="text-center">
+                <p className="text-3xl sm:text-4xl font-bold text-blue-600">{stat.value}</p>
+                <p className="text-sm text-blue-800/70 mt-1">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -437,6 +466,13 @@ export default function Home() {
                       </li>
                     ))}
                   </ul>
+                  <div className="flex flex-wrap gap-2 pt-5 mt-5 border-t border-blue-100">
+                    {role.technologies.map((tech) => (
+                      <Badge key={tech} variant="secondary" className="bg-blue-50 text-blue-700 font-normal">
+                        {tech}
+                      </Badge>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -629,6 +665,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* Footer */}
       <footer className="bg-blue-950 text-white mt-auto">
