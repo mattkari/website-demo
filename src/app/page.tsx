@@ -16,6 +16,7 @@ import {
   GitBranch,
   Cloud,
   Layers,
+  Loader2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -23,19 +24,30 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { Alert } from '@/components/ui/alert';
 
 const LINKEDIN_URL = 'https://www.linkedin.com/in/mattkari';
 const GITHUB_URL = 'https://github.com/mattkari';
 const EMAIL = 'mattkarimov@outlook.com';
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+
+type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 export default function Home() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [status, setStatus] = useState<FormStatus>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: '',
   });
+
+  // Injected at build time from the WEB3FORMS_ACCESS_KEY repo secret. Without it
+  // there is nowhere for submissions to go, so the form renders in a disabled
+  // state pointing at the email address instead of failing silently.
+  const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+  const isFormEnabled = Boolean(accessKey);
 
   const navLinks = [
     { name: 'Home', href: '#home' },
@@ -57,11 +69,41 @@ export default function Home() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setFormSubmitted(true);
-    setTimeout(() => setFormSubmitted(false), 5000);
-    setFormData({ name: '', email: '', message: '' });
+    if (!accessKey) return;
+
+    const botcheck = new FormData(e.currentTarget).get('botcheck');
+    setStatus('submitting');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          subject: `Portfolio contact from ${formData.name}`,
+          from_name: 'Portfolio Site',
+          botcheck,
+        }),
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('error');
+        setErrorMessage(result.message || 'Something went wrong sending your message.');
+      }
+    } catch {
+      setStatus('error');
+      setErrorMessage('Could not reach the mail service. Please check your connection.');
+    }
   };
 
   const differentiators = [
@@ -601,19 +643,62 @@ export default function Home() {
               <CardHeader>
                 <CardTitle className="text-blue-900">Get In Touch</CardTitle>
                 <CardDescription className="text-blue-700">
-                  Send a message via the contact form
+                  Send a message via the contact form — typically replies within 24 hours
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                {formSubmitted && (
-                  <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-700">
-                    <p className="font-medium">Message sent (demo)</p>
-                    <p className="text-sm">
-                      This demo form does not send real messages. Please connect via LinkedIn or email.
-                    </p>
-                  </div>
+                {status === 'success' && (
+                  <Alert
+                    role="status"
+                    aria-live="polite"
+                    className="mb-6 bg-green-50 border-green-200 text-green-800"
+                  >
+                    <p className="font-medium">Message sent</p>
+                    <p>Thanks for getting in touch — I&apos;ll reply to you by email.</p>
+                  </Alert>
                 )}
+
+                {status === 'error' && (
+                  <Alert
+                    aria-live="assertive"
+                    className="mb-6 bg-red-50 border-red-200 text-red-800"
+                  >
+                    <p className="font-medium">Message not sent</p>
+                    <p>
+                      {errorMessage} You can email me directly at{' '}
+                      <a href={`mailto:${EMAIL}`} className="underline font-medium">
+                        {EMAIL}
+                      </a>
+                      .
+                    </p>
+                  </Alert>
+                )}
+
+                {!isFormEnabled && (
+                  <Alert
+                    aria-live="polite"
+                    className="mb-6 bg-amber-50 border-amber-200 text-amber-900"
+                  >
+                    <p className="font-medium">Contact form unavailable</p>
+                    <p>
+                      Please email me directly at{' '}
+                      <a href={`mailto:${EMAIL}`} className="underline font-medium">
+                        {EMAIL}
+                      </a>
+                      .
+                    </p>
+                  </Alert>
+                )}
+
                 <form onSubmit={handleSubmit} className="space-y-6">
+                  {/* Honeypot: hidden from people, filled by bots — Web3Forms rejects those. */}
+                  <input
+                    type="checkbox"
+                    name="botcheck"
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
                   <div className="space-y-2">
                     <Label htmlFor="name" className="text-blue-900">Name *</Label>
                     <Input
@@ -622,6 +707,7 @@ export default function Home() {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
+                      disabled={!isFormEnabled || status === 'submitting'}
                       placeholder="Your name"
                     />
                   </div>
@@ -634,6 +720,7 @@ export default function Home() {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
+                      disabled={!isFormEnabled || status === 'submitting'}
                       placeholder="you@example.com"
                     />
                   </div>
@@ -645,6 +732,7 @@ export default function Home() {
                       value={formData.message}
                       onChange={handleInputChange}
                       required
+                      disabled={!isFormEnabled || status === 'submitting'}
                       rows={5}
                       className="resize-none"
                       placeholder="Your message..."
@@ -652,13 +740,18 @@ export default function Home() {
                   </div>
                   <Button
                     type="submit"
+                    disabled={!isFormEnabled || status === 'submitting'}
                     className="w-full bg-blue-600 hover:bg-blue-700 text-white py-6 text-lg"
                   >
-                    Send Message
+                    {status === 'submitting' ? (
+                      <>
+                        <Loader2 className="animate-spin" />
+                        Sending...
+                      </>
+                    ) : (
+                      'Send Message'
+                    )}
                   </Button>
-                  <p className="text-sm text-blue-600 text-center">
-                    <strong>Note:</strong> This is a demo form and does not send messages.
-                  </p>
                 </form>
               </CardContent>
             </Card>
