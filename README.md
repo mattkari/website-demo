@@ -1,7 +1,9 @@
-# website-demo
+# mattkari.github.io
 
-A personal portfolio website for Matt Karimov, QA Automation Specialist & Senior
+Personal portfolio website for Matt Karimov, QA Automation Specialist & Senior
 Automation Tester, built with Next.js 15, React 18, and Tailwind CSS.
+
+**Live site:** https://mattkari.github.io
 
 ## Features
 
@@ -41,6 +43,24 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ```bash
 npm run build
 ```
+
+## Contact form
+
+The contact form posts directly to [Web3Forms](https://web3forms.com) from the
+browser, since the site is a static export with no backend. It needs an access
+key, supplied as `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`:
+
+- **Locally:** add it to `.env.local` (gitignored).
+- **In CI:** stored as the `WEB3FORMS_ACCESS_KEY` repository secret and injected
+  at build time by `.github/workflows/nextjs.yml`.
+
+Without the key the form renders in a disabled state pointing at the email
+address, rather than silently discarding messages.
+
+## Deployment
+
+Pushes to `main` trigger `.github/workflows/nextjs.yml`, which builds a static
+export (`output: 'export'` in `next.config.js`) and publishes it to GitHub Pages.
 
 ## Project Structure
 
